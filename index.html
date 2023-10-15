@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Property Sales In Melbourne</title>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
+
+</head>
+
+<body>
+
+  <div class="page">
+    <h1>Property Sales In Melbourne </h1>
+    <h1>(2016-2017)</h1>
+    <p>Data Visualisation 2 </p>
+    <p>Brian Shu 31107087</p>
+    <hr>
+ 
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description-left">
+          <p><b>Melbourne</b>, Australia's second-largest city, is renowned for its diverse and vibrant real estate landscape. 
+            The city offers a mix of housing options, from <b>modern apartments</b> in the central business district to spacious suburban <b>townhouses</b>. 
+            In this visualisation, we will look at the sales of property in Melbourne between <b> 2016 & 2017</b>.
+          </p>
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description-right">
+          <p> The <b> average price</b> and <b> average landsize</b> of the property in each <b>suburb</b> 
+            will be visualised on a map to observe how price varies with <b>geographical location</b>,
+            <b>landsize</b>and <b>distance to CBD</b> to determine any potential
+            trends across the data. The <b>number of spaces</b> in the property will be visualised to highlight the demand
+            in the real estate market.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>Geographical Location </h2>
+    </div>
+    <hr>
+
+    <!-- end pure grid group -->
+    <!-- pure grid group Price choropleth map -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h3>Average Price Of Property In Melbourne (2016-2017)</h3>
+        <div id="vis1" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-3">
+        <div id="slider-container">
+          <p><b>Year:</b></p>
+          <input type="range" id="year-slider" min="2016" max="2017" step="1" value="2017">
+          <span id="slider-value1">2017</span>
+        </div>
+      </div>
+      <div class="pure-u-1-3">
+        <div id="slider-container">
+          <p><b>Zoom: </b></p>
+          <input type="range" id="zoom-slider" min="20000" max="40000" step="2500" value="23000">
+          <span id="slider-value2">15</span><span id="percent">%</span>
+        </div>
+      </div>
+      <div class="pure-u-1-3">
+        <div id="dropdown-container">
+          <label for="zone-select"><b>City: </b> </label><p></p>
+          <select id="zone-select">
+            <option value="[145, -37.85]" selected>Melbourne CBD</option>
+            <option value="[144.68, -37.65]">Geelong</option>
+            <option value="[145.18, -37.796]">Ringwood</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+    
+     <!-- pure grid group for polar area chart-->
+     <div class="pure-g">
+      <div class="pure-u-1-2">
+        <h3>Average Price of Property Per Region</h3>
+        <div id="vis6" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <p><b>🖲️Drag</b> the<b> Year </b>slider to view the <b>average sales</b> of property in <b>2016</b> or <b>2017</b>.</p>
+            
+            <p><b>🔎Drag</b> the <b>Zoom</b> slider to <b>zoom in</b> or <b>zoom out</b> as desired.</p>
+            
+            <p><b>🔽Select</b> the <b>City</b> from the <b>dropdown menu</b> to <b>focus</b> on the selected city.</p>
+          <br>
+          <p> The choropleth map displays the <b>average price</b> of property in <b>Melbourne Metropolitan</b>, using 
+            <b>colour</b> to indicate the variation in <b>price</b> of the property. Suburbs in Melbourne are coloured in different luminance, with 
+            <b>darker</b> colour indicating <b>higher</b> price, and <b>lighter</b> colour <b>for lower</b> price.
+          </p>
+          <p>
+            A general trend is elucidated here, such that the <b>closer</b> a suburb is to the <b>CBD area</b>, the <b>higher</b> the sale price.
+            Furthermore, hot-spots with property price higher than <b>$1.5 million</b> could be seen in suburbs within proximity of CBD, such as <b>Middle Park</b>,
+            <b>Canterbury</b>, and <b>Brighton</b>. The <b>Southern Metropolitan</b> area is shown to have the <b>highest</b> property price.
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- end pure grid group -->
+    <div>
+      <h2>Landsize And Distance To CBD</h2>
+    </div>
+    <hr>
+      <!-- pure grid group Average Landsize choropleth map -->
+      <div class="pure-g">
+        <div class="pure-u-1-1">
+          <h3>Average Landsize Of Property In Melbourne</h3>
+          <div id="vis8" class="vis-container"></div>
+        </div>
+        <div class="pure-u-1-2" >
+          <div id="slider-container">
+            <p><b>Zoom: </b></p>
+            <input type="range" id="zoom-slider2" min="63000" max="73000" step="1000" value="63000">
+            <span id="slider-value3">0</span><span id="percent2">%</span>
+          </div>
+        </div>
+        <div class="pure-u-1-2">
+          <div id="slider-container">
+            <p><b>Max. Sale Price ($ in M) :</b></p>
+            <input type="range" id="price-Slider" min="0.5" max="2.6" step="0.1" value="2.5">
+            <span id="slider-value4">2.5</span>
+          </div>
+        </div>
+        
+      </div>
+      <!-- end pure grid group -->
+    <!-- pure grid group for heat map-->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-left">
+          <p><b>🔎Drag</b> the <b>Zoom</b> slider to <b>zoom in</b> or <b>zoom out</b> as desired.</p>
+          <p>🖲️Drag</b> the<b> Max. Sale Price </b>slider to change the <b>maximum sale price</b> in <b>millions</b>.</p>
+          <br>
+          <p> The choropleth map displays the <b>average landsize</b> of property in <b>Melbourne Metropolitan</b>, using 
+            <b>colour</b> to indicate the variation in <b>landsize</b> of the property. Suburbs in Melbourne are coloured in different luminance, with 
+            <b>darker</b> colour indicating <b>larger</b> landsize, and <b>lighter</b> colour for <b>smaller</b> landsize.
+          </p>
+          <p>
+            An obvious trend is that the <b>further</b> the property is away from the CBD area, the <b>larger</b> is the property. This choropleth
+            is in stark contrast with that showing the average price.
+          </p>
+
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <h3>Price Vs. Distance To CBD</h3>
+        <div id="vis5" class="vis-container"></div>
+        <div id="slider-container">
+          <p><b>Landsize (sqm):</b></p>
+          <input type="range" id="landsize-slider" min="10" max="5000" step="10" value="10">
+          <span id="landsize-slider-value">10</span>
+        </div>
+      </div>
+
+    </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group scatterplot -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <h3>Average Price Vs. Average Landsize</h3>
+        <div id="vis2" class="vis-container"></div>
+        <div id="dropdown-container">
+          <label for="region-select"><b>Type of Property:</b> </label><p></p>
+          <select id="region-select">
+            <option value="all" selected>Show All</option>
+            <option value="h">House</option>
+            <option value="t">Townhouse</option>
+            <option value="u">Unit/Apartment</option>
+            
+          </select>
+        </div>
+      </div>
+
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <p><b>🔎Drag</b> the <b>Landsize</b> slider to view property with <b>landsize above</b> the desired value. </p>
+          <br>
+          <p>In general, the landsize of the property is between <b>100 and 1000 sqm</b>.
+              There is no obvious trend between landsize and the price of the property as the scatterplot clearly
+              shows that for similar landsize, there could still be huge variation in price.
+          </p>
+          <p>This is attributable to the <b>property type and spaces available</b> and the <b>distance from CBD</b>,
+            all of which are indispensable in determining the price. Nevertheless, from the choropleths above,
+            it is crystal clear that property <b>further</b> away from CBD has <b>greater</b> landsize at a <b>lower</b>
+            price. This can be ascribed to the lower demand of land in suburban areas, leading to higher land availability,
+            hence cheaper land. 
+          </p>
+          <br>
+        <p><b>🔽Select</b> the <b>Type of Property</b> from the <b>dropdown menu</b>.</p>
+        </div>
+        
+      </div>
+
+    </div>
+    <!-- end pure grid group -->
+    
+    <div>
+      <h2>Property Room And Space  </h2>
+    </div>
+    <hr>
+    <!-- pure grid group for bar charts-->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h3>Total Unit Sold Vs. Number Of Bedrooms, Bathrooms And Car Spaces</h3>
+      </div>
+        
+      <div class="pure-u-1-3" style="width: 31.5%;">
+        <div id="vis4" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-3">
+        <div id="vis3" class="vis-container" style="margin-left: 15px;"></div>
+      </div>
+      <div class="pure-u-1-3">
+        <div id="vis7" class="vis-container"></div>
+      </div>
+
+    </div>
+    <!-- end pure grid group -->
+
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description-left">
+          <p>
+            From the chart above, <b>three-bedroom</b> homes emerge as the reigning favorites, offering the ideal balance between space and value.
+            This configuration provides room for growth and guest accomodations.
+          </p>
+          <p> Bathroom-wise, <b>one bathroom</b>
+            homes are in high demand. A single bathroom can be a streetwise and cost-effective choice, maintaining affordability while meeting basic needs.</p>
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description-right">
+          <p>When it comes to car spaces, <b>two-car spaces</b> are the most sought-after, hinting at the importance of personal mobility in this sprawling city.
+            Whether for daily commuting or weekend getaways, two-car spaces provide flexibility and convenience.
+            
+          </p>
+          <p>
+            This story highlights Melbourne's <b>diverse </b>real estate landscape, catering to a wide range of preferences and needs. It's a city where <b>practicality, lifestyle, and value</b> come together in the choices people make when buying their homes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div> <!-- end page -->
+
+  <script type="text/javascript">
+    var specVis1 = "js/interactive_choropleth.vega";
+    var specVis2 = "js/Realscatterplot.vg";
+    var specVis3 = "js/BarBathroom.vg";
+    var specVis4 = "js/BarBedroom.vg";
+    var specVis5 = "js/heatmap.vg";
+    var specVis6 = "js/polarArea.vg";
+    var specVis7 = "js/BarCarspaces.vg";    
+    var specVis8 = "js/RealAverageLandChoropleth.vg";
+
+
+
+    vegaEmbed("#vis2", specVis2,{ "actions": false }).then((result) => {
+      const view = result.view;
+      // Add event listener for the slider
+      const region = document.getElementById("region-select");
+      region.addEventListener("input", function () {
+        const selectedRegion = this.value;
+        
+        if (selectedRegion === "all") {
+        // Handle "Show All" option
+        view.signal("house_selection", null).runAsync();
+      } else {
+        view.signal("house_selection", selectedRegion).runAsync();
+      }
+    });
+    }).catch(console.error);
+
+    vegaEmbed('#vis3', specVis3, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis4', specVis4, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    // Embed heat map
+    vegaEmbed("#vis5", specVis5,{ "actions": false }).then((result) => {
+      const view = result.view;
+
+      // Add event listener for the slider
+      const slider = document.getElementById("landsize-slider");
+      const sliderValue = document.getElementById("landsize-slider-value");
+      
+      slider.addEventListener("input", function () {
+        const landsizeSelection = +this.value;
+        sliderValue.textContent = landsizeSelection;
+        view.signal("Landsize_filter", landsizeSelection).runAsync();
+      });
+    }).catch(console.error);
+
+    // Embed Average Price choropleth map
+    vegaEmbed("#vis1", specVis1,{ "actions": false }).then((result) => {
+      const view = result.view;
+
+      // Add event listener for the slider
+      const slider = document.getElementById("year-slider");
+      const sliderValue = document.getElementById("slider-value1");
+      const zoomSlider = document.getElementById("zoom-slider");
+      const zoomValue = document.getElementById("slider-value2");
+      const zoomTo = document.getElementById("zone-select");
+      slider.addEventListener("input", function () {
+        const yearSelection = +this.value;
+        sliderValue.textContent = yearSelection;
+        view.signal("Year_selection", yearSelection).runAsync();
+      });
+      zoomSlider.addEventListener("input", function () {
+        const zoomLevel = +this.value;
+        zoomValue.textContent = (zoomLevel-20000)/20000 * 100;
+        // Update the "Zoom_selection" parameter in the Vega-Lite specification
+        view.signal("zoom_level", zoomLevel).runAsync();
+      });
+      zoomTo.addEventListener("input", function () {
+        const selectedCenter = JSON.parse(this.value);
+        view.signal("center_to", selectedCenter).runAsync();
+
+      })
+    }).catch(console.error);
+
+    // Embed Average Landsize choropleth map
+    vegaEmbed("#vis8", specVis8,{ "actions": false }).then((result) => {
+      const view = result.view;
+
+      // Add event listener for the slider
+      const zoomSlider2 = document.getElementById("zoom-slider2"); // Slider to zoom in for average landsize choropleth map
+      const zoomValue3 = document.getElementById("slider-value3"); // Slider VALUE for ZOOM value
+      const priceValue = document.getElementById("slider-value4"); // Slider VALUE for PRICE
+      const priceSlider = document.getElementById("price-Slider");
+
+      priceSlider.addEventListener("input", function () {
+        const priceSelection = +this.value;
+        priceValue.textContent = priceSelection;
+        view.signal("priceFilter", priceSelection).runAsync();
+      });
+
+      zoomSlider2.addEventListener("input", function () {
+        const zoomLevel = +this.value;
+        zoomValue3.textContent = (zoomLevel-63000)/10000 * 100;
+        // Update the "Zoom_selection" parameter in the Vega-Lite specification
+        view.signal("zoom_level", zoomLevel).runAsync();
+      });
+
+    }).catch(console.error);
+
+
+    vegaEmbed('#vis6', specVis6, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis7', specVis7, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+  </script>
+</body>
+
+</html>
