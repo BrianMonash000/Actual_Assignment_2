@@ -1,0 +1,147 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 600,
+    "height": 600,
+
+    "data": {
+        "url": "https://raw.githubusercontent.com/BrianMonash000/Actual_Assignment_2/main/Data/2au-postcodes-Visvalingam-5.TopoJSON",
+        "format": {
+            "type": "topojson",
+            "feature": "au-postcodes-Visvalingam-5"
+        }
+    },
+    "params": [
+        {
+            "name": "zoom_level",
+            "value": 22000,
+            "bind": {
+                "input": "range",
+                "min": 20000,
+                "max": 40000,
+                "step": 100,
+                "name": "Zoom: "
+            }
+        },
+        {
+            "name": "priceFilter",
+            "value": 2.5,
+            "bind": {
+                "input": "range",
+                "min": 0.2,
+                "max": 2.5,
+                "step": 0.1,
+                "name": "Maximum Sale Price (million $): "
+            }
+        }
+    ],
+    "transform": [
+        {
+            "lookup": "properties.POA_CODE",
+            "from": {
+                "data": {
+                    "url": "https://raw.githubusercontent.com/BrianMonash000/Actual_Assignment_2/main/Data/Edited%20Melbourne%20Housing.csv"
+                },
+                "key": "Postcode",
+                "fields": [
+                    "Landsize",
+                    "Price"
+                ]
+            },
+            "default": "0"
+        },
+        
+        {
+            "joinaggregate": [
+              {"field": "Price", "op": "mean", "as": "Average Price"}
+            ],
+            "groupby": ["properties.POA_CODE"]
+        },
+        {
+            "joinaggregate": [
+              {"field": "Landsize", "op": "mean", "as": "Average Landsize"}
+            ],
+            "groupby": ["properties.POA_CODE"]
+        },
+        {
+            "calculate": "datum['Average Landsize'] === 0 ? 'Data is not available' : datum['Average Price'] >= priceFilter * 1000000 ? 'No data' : datum['Average Landsize'] < 200 ? '0m\u00B2-200m\u00B2' : datum['Average Landsize'] < 300 ? '200m\u00B2-300m\u00B2' : datum['Average Landsize'] < 400 ? '300m\u00B2-400m\u00B2' : datum['Average Landsize'] < 600 ? '400m\u00B2-600m\u00B2' :'600m\u00B2+'",
+            "as": "Average Landsize Bin"
+        },
+        {
+            "calculate": "datum['Average Landsize'] === 0 ? 'No data' : format(datum['Average Landsize'], ',.0f') + 'm\u00B2'",
+            "as": "Average Landsize Label"
+        },
+        {
+            "calculate": "'Data is not available in ' + datum.properties.POA_CODE",
+            "as": "note"
+        }
+    ],
+    "projection": {
+        "type": "mercator",
+        "center": [
+            144.975,
+            -37.812
+        ],
+        "scale": {
+            "expr": "zoom_level"
+        }
+    },
+    "layer": [
+        
+        {
+            "mark": {
+                "type": "geoshape"
+            },
+            "encoding": {
+                "color": {
+                    "field": "Average Landsize Bin",
+                    "type": "ordinal",
+                    "scale": {
+                        "domain": [
+                            "No data",
+                            "0m\u00B2-200m\u00B2",
+                            "200m\u00B2-300m\u00B2",
+                            "300m\u00B2-400m\u00B2",
+                            "400m\u00B2-600m\u00B2",
+                            "600m\u00B2+"
+                        ],
+                        "range": [
+                            "#cccccc",
+                            "#ffffb2",
+                            "#fecc5c",
+                            "#fd8d3c",
+                            "#f03b20",
+                            "#bd0026"
+
+                        ]
+                    },
+                    "sort": [
+                        "No data",
+                        "0m\u00B2-200m\u00B2",
+                        "200m\u00B2-300m\u00B2",
+                        "300m\u00B2-400m\u00B2",
+                        "400m\u00B2-600m\u00B2",
+                        "600m\u00B2+"
+                    ],
+                    "legend": {
+                        "title": "Land Size"
+                    }
+                },
+                "stroke": {
+                    "value": "grey"
+                },
+                "tooltip": [
+                    {
+                        "field": "Suburb",
+                        "title": "Postcode",
+                        "type": "nominal"
+                    },
+                    {
+                        "field": "Average Landsize Label",
+                        "type": "nominal",
+                        "title": "Average Landsize (sqm)"
+                    }
+                ]
+            }
+        }
+    ]
+}

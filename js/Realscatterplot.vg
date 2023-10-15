@@ -1,0 +1,139 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "height": 220,
+  "width": "container",
+  "padding": {
+
+"bottom": 10,
+    "right": 10
+
+  },
+  
+  "data": {
+    "url": "https://raw.githubusercontent.com/BrianMonash000/Actual_Assignment_2/main/Data/Edited%20Melbourne%20Housing.csv"
+
+  },
+  "params": [
+
+    {
+      "name": "house_selection"
+    }
+  ],
+  "transform": [
+    {"filter": "datum.Landsize > 0"},
+    {"filter": "datum.Price > 0"},
+    {"filter": "datum.Car > 0"},
+    {"filter": "datum.Bathroom > 0"},
+    {"filter": "datum.BuildingArea > 0"},
+    {"filter": "datum.Bedroom2 > 0"},
+    {
+      "filter": " house_selection == null||datum.Type == house_selection" 
+    },
+    {
+      "joinaggregate": [{"field": "Price", "op": "mean", "as": "Average Price Per Suburb"}],
+      "groupby": ["Suburb"]
+    },
+    {
+      "joinaggregate": [{"field": "Landsize", "op": "mean", "as": "Average Landsize Per Suburb"}],
+      "groupby": ["Suburb"]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Average Landsize Per Suburb",
+      "type": "quantitative",
+      "title": "Average Landsize (sqm)",
+      
+      "scale": {"type": "log", "domain": [1,100000]},
+      "axis": {"tickCount":6, "tickWidth":0.5, "tickSize":2}
+      
+    },
+    "y": {
+      "field": "Average Price Per Suburb",
+      "type": "quantitative",
+      "title": "Average Price (AUD)",
+      "axis": {
+        "tickCount": 6,
+        "format": ".2s",
+        "labelLimit": 0  
+        }
+      
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type":"circle","stroke": "rosybrown","strokeWidth": 0.2},
+      "encoding": {
+        "color": {
+          "field": "Type",
+          "type": "nominal",
+          "scale": {
+            "domain":[
+              "h",
+              "t",
+              "u"
+              
+            ],
+            "range": [
+              "#eb6134",
+              "#dbeb34",
+              "#9834eb"
+            ]
+          },
+          "legend": {
+            "labelExpr": "{'h': 'House','t': 'Townhouse','u': 'Unit/Apartment'}[datum.label]",
+          "title":"Type of Property",
+          "orient": "none",
+          "labelFontSize": 12,
+        "strokeColor":"honeydew"}
+        },
+        "opacity": {"value": 0.7},
+        "tooltip": [
+          {"field": "Suburb", "type": "nominal"},
+          {"field": "Average Landsize Per Suburb", "title":"Average Land size (sqm)","type": "quantitative", "format": ","},
+          
+          {
+            "field": "Average Price Per Suburb",
+            "title": "Average Price (AUD)",
+            "type": "quantitative",
+            "format": ".3s"
+          }
+          
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {"field": "Suburb", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition": {
+            "test": "datum['Suburb'] == 'New Gisborne' || datum['Suburb'] == 'Kooyong' || datum['Suburb'] == 'Kurunjang'",
+            "value": 1
+          },
+          "value": 0
+        },
+        "tooltip": [
+          {"field": "Suburb", "type": "nominal"},
+          {"field": "Landsize", "title":"Land size (sqm)","type": "quantitative", "format": ","},
+          {"field": "Distance", "title":"Distance to CBD (km)","type": "quantitative", "format": ","},
+          {"field": "Price", "title":"Price (AUD)","type": "quantitative", "format": ".3s"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "font": "Quicksand"
+  }
+}

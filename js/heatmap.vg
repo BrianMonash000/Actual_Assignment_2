@@ -1,0 +1,74 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {"url": "https://raw.githubusercontent.com/BrianMonash000/Homework_week10/main/Data/Edited%20Melbourne%20Housing.csv"},
+  
+
+    "params": [
+      {
+        "name": "Landsize_filter",
+        "value": 10
+      }
+    ],
+
+    "transform": [{
+      "filter": {"and": [
+        {"field": "Distance", "valid": true},
+        {"field": "Price", "valid": true}
+            ]}
+    },
+  
+     {"filter": "datum.Landsize > Landsize_filter"},
+     {
+      "bin": true,
+      "field": "Distance",
+      "as": "binned_Distance"
+    },
+    {
+      "bin": true,
+      "field": "Price",
+      "as": "binned_price"
+   
+    }],
+    "mark": "rect",
+    "width": 300,
+    "height": 200,
+    "encoding": {
+      "x": {
+        "bin": {"maxbins":40},
+        "field": "Distance",
+        "type": "quantitative",
+        "title": "Distance (km)"
+      },
+      "y": {
+        "bin": {"maxbins": 40},
+        "field": "Price",
+        "type": "quantitative",
+        "axis": {
+          "tickCount": 10,
+          "format": "$.2s",
+          "values": [1000000, 2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000]},
+          "title":"Price (AUD)"
+      
+      },
+      "color": {
+        "aggregate":"count",
+        "type": "quantitative",
+        "scale": {
+            "domain":[10, 50, 100, 300, 500],
+            "range": ["#fee391", "#fec44f","#fe9929","#ec7014","#cc4c02","#8c2d04"]
+        }
+      },
+      "tooltip": [
+        {"field": "binned_Distance", "type": "quantitative", "title": "Binned Distance"},
+        {"field": "binned_price", "type": "quantitative", "title": "Binned Price", "format":"$.2s"},
+        {"aggregate": "count", "type": "quantitative", "title": "Count"}
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": "transparent"
+      },
+      "font": "Quicksand"
+    }
+  }
+  

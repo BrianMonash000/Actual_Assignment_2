@@ -1,0 +1,128 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 370,
+
+    "data": {
+        "url": "https://raw.githubusercontent.com/BrianMonash000/Actual_Assignment_2/main/Data/vic_localities.json",
+        "format": {
+            "type": "topojson",
+            "feature": "vic_localities"
+        }
+    },
+    "params": [
+        {
+            "name": "zoom_level",
+            "value": 63000
+        
+        },
+        {
+            "name": "priceFilter",
+            "value": 2.5
+            
+        }
+    ],
+    "transform": [
+ 
+        {
+            "lookup": "properties.LOC_NAME",
+            "from": {
+                "data": {
+                    "url": "https://raw.githubusercontent.com/BrianMonash000/Actual_Assignment_2/main/Data/average_sales.csv"
+                },
+                "key": "Suburb",
+                "fields": [
+                    "Average Landsize",
+                    "Average Price"
+                ]
+            },
+            "default": "0"
+        },
+
+        {
+            "calculate": "datum['Average Landsize'] === '0' ? 'Data is not available' : datum['Average Price'] >= priceFilter * 1000000 ? 'Data is not available' : datum['Average Landsize'] < 100 ? '0m\u00B2-100m\u00B2' : datum['Average Landsize'] < 300 ? '100m\u00B2-300m\u00B2' : datum['Average Landsize'] < 500 ? '300m\u00B2-500m\u00B2' : datum['Average Landsize'] < 800 ? '500m\u00B2-800m\u00B2' : '800m\u00B2+'",
+            "as": "Average Landsize Bin"
+        },
+        {
+            "calculate": "datum['Average Landsize'] === '0' ? 'Data is not available' : format(datum['Average Landsize'], ',.0f') + 'm\u00B2'",
+            "as": "Average Landsize Label"
+        }
+    ],
+    "projection": {
+        "type": "mercator",
+        "center": [
+            144.975,
+            -37.812
+        ],
+        "scale": {
+            "expr": "zoom_level"
+        }
+    },
+    "layer": [
+        {
+            "mark": {
+                "type": "geoshape"
+            },
+            "encoding": {
+                "color": {
+                    "field": "Average Landsize Bin",
+                    "type": "ordinal",
+                    "scale": {
+                        "domain": [
+                            "Data is not available",
+                            "0m\u00B2-100m\u00B2",
+                            "100m\u00B2-300m\u00B2",
+                            "300m\u00B2-500m\u00B2",
+                            "500m\u00B2-800m\u00B2",
+                            "800m\u00B2+"
+                        ],
+                        "range": [
+                            "#cccccc",
+                            "#faf570",
+                            "#fecc5c",
+                            "#fd8d3c",
+                            "#f03b20",
+                            "#bd0026"
+                        ]
+                    },
+                    "sort": [
+                        "Data is not available",
+                            "0m\u00B2-100m\u00B2",
+                            "100m\u00B2-300m\u00B2",
+                            "300m\u00B2-500m\u00B2",
+                            "500m\u00B2-800m\u00B2",
+                            "800m\u00B2+"
+                    ],
+                    "legend": {
+                        "title": "Land Size",
+                        "orient": "bottom",
+                        "labelFontSize": 13
+                    }
+                },
+                "stroke": {
+                    "value": "white"
+                
+                },
+                "strokeWidth":{
+                    "value":1.5
+                },
+                "tooltip": [
+                    {
+                        "field": "properties.LOC_NAME",
+                        "title": "Suburb",
+                        "type": "nominal"
+                    },
+                    {
+                        "field": "Average Landsize Label",
+                        "type": "nominal",
+                        "title":"Average Landsize (sqm)"
+                    }
+                ]
+            }
+        }
+    ],
+    "config": {
+        "font": "Quicksand",
+        "style": {"cell":{"stroke":"transparent"}}
+      }
+}

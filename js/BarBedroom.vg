@@ -1,0 +1,77 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple bar chart with embedded data.",
+
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "https://raw.githubusercontent.com/BrianMonash000/Homework_week10/main/Data/Edited%20Melbourne%20Housing.csv"
+  },
+  "transform": [
+    {"filter": " datum.Bedroom2 < 10 && datum.Bedroom2 > 0"},
+    {
+      "aggregate": [{
+       "op": "count",
+       "field": "Bedroom2",
+       "as": "count_bedroom"
+      }],
+      "groupby": ["Bedroom2"]
+    }
+    
+  ],
+  "layer":[
+    {
+      "mark": {"type":"bar", "cornerRadiusEnd": 5,"width": {"band": 0.8}},
+      "encoding": {
+        "x": {
+            "field": "Bedroom2",
+             "type": "quantitative", 
+             "axis": {"labelAngle": 0,"tickCount":5},
+            "title": "Number of bedrooms"},
+        "y": {
+            "field": "count_bedroom", 
+            "type": "quantitative",
+            "title": "Total Unit Sold",
+            "stack":"zero",
+            "axis": {"labelAngle": 0, "tickCount":3},
+            "scale":{
+              "domainMax":7000
+            }
+          },
+        "color": {"value": "#fdc086"},
+        "tooltip": [
+            {"field": "Bedroom2", "type": "quantitative", "title": "Number of bedrooms"},
+            {"field": "count_bedroom","type": "quantitative", "format": ",","title":"Total unit sold"}
+            ]
+      }
+    },
+    {
+      "mark":{
+        "type": "text",
+        "baseline":"top",
+        "fontSize":12,
+        "fontStyle": "italic",
+        "align":"center",
+        "dy":-12
+      },
+      "encoding": {
+        "x":{"field":"Bedroom2","type": "quantitative"},
+        "y":{"field":"count_bedroom","type": "quantitative"},
+        "text":{"field":"count_bedroom","type": "quantitative"},
+        "color":{"condition": {
+          "test": "datum.count_bedroom === 6453",
+          "value": "#f0620a"
+        },
+        "value":"#94918f"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "font": "Quicksand"
+  }
+  
+}

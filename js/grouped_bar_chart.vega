@@ -1,0 +1,14 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Average Number of Bathrooms, Bedrooms, and Car Spaces by Region",
+    "width": 600,
+    "height": 500,
+    "data": {"url": "https://raw.githubusercontent.com/BrianMonash000/Actual_Assignment_2/main/Data/Edited%20Melbourne%20Housing.csv"},
+    "mark": "bar",
+    "encoding": {
+      "x": {"field": "Regionname", "type": "nominal", "title": "Region"},
+      "y": {"aggregate": "average", "field": "Bathroom", "type": "quantitative", "title": "Average Count"},
+      "color": {"value": "blue"} 
+    }
+    
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple bar chart with embedded data.",
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "https://raw.githubusercontent.com/BrianMonash000/Homework_week10/main/Data/Edited%20Melbourne%20Housing.csv"
+  },
+  "transform": [
+    {"filter": " datum.Car < 10 && datum.Car > 0"},
+    {
+      "aggregate": [{
+       "op": "count",
+       "field": "Car",
+       "as": "count_Car"
+      }],
+      "groupby": ["Car"]
+    }
+    
+  ],
+  "layer":[
+    {
+      "mark": {"type":"bar", "cornerRadiusEnd": 5,"width": {"band": 0.8}},
+      "encoding": {
+        "x": {
+            "field": "Car",
+             "type": "quantitative", 
+             "axis": {"labelAngle": 0,"tickCount":5},
+            "title": "Number of Car Spaces"},
+        "y": {
+            "field": "count_Car", 
+            "type": "quantitative",
+            "title": "Total Unit Sold",
+            "stack":"zero",
+            "axis": {"labelAngle": 0, "tickCount":3},
+            "scale":{
+              "domainMax":7000
+            }
+          },
+        "color": {"value": "#fdc086"},
+        "tooltip": [
+            {"field": "Car", "type": "quantitative", "title": "Number of car spaces"},
+            {"field": "count_Car","type": "quantitative", "format": ",","title":"Total unit sold"}
+            ]
+      }
+    },
+    {
+      "mark":{
+        "type": "text",
+        "baseline":"top",
+        "fontSize":12,
+        "fontStyle": "italic",
+        "align":"center",
+        "dy":-12
+      },
+      "encoding": {
+        "x":{"field":"Car","type": "quantitative"},
+        "y":{"field":"count_Car","type": "quantitative"},
+        "text":{"field":"count_Car","type": "quantitative"},
+        "color":{"condition": {
+          "test": "datum.count_Car === 6168",
+          "value": "#f0620a"
+        },
+        "value":"#94918f"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "font": "Quicksand"
+  }
+  
+}

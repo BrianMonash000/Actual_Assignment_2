@@ -1,0 +1,84 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://raw.githubusercontent.com/BrianMonash000/Actual_Assignment_2/main/Data/Edited%20Melbourne%20Housing.csv"
+    },
+    "config": {
+      "axis": {
+        "labelFont": "Quicksand, sans-serif"
+      },
+      "title": {
+        "font": "Quicksand, sans-serif"
+      },
+      "text": {
+        "font": "Quicksand"
+      },
+      "style": {"cell":{"stroke":"transparent"}},
+      "font": "Quicksand"
+      
+    },
+
+    "width": "container",
+    "height": 300,
+    "transform": [
+      {"filter": "datum.Price > 0"},
+      {
+        "aggregate": [{"op": "mean", "field": "Price", "as": "RegionAverage"}],
+        "groupby": ["Regionname"]
+      }
+    ],
+    "layer": [
+      {
+        "mark": {"type": "arc", "innerRadius": 20, "stroke": "rosybrown","strokeWidth": 2.5},
+        "encoding": {
+          "theta": {
+            "field": "RegionAverage",
+            "type": "quantitative",
+            "stack": true,
+            "sort": "descending"
+          },
+          "color": {"field": "Regionname", "type": "nominal"},
+          "tooltip": [
+            {"field": "Regionname", "title": "Region"},
+            {"field": "RegionAverage", "title": "Average Price in $", "format":".2s"}
+          ]
+        }
+      },
+      {
+        "mark": {"type": "text", "color": "black", "radiusOffset": 20,"fontSize": 12},
+        "encoding": {
+          "theta": {
+            "field": "RegionAverage",
+            "type": "quantitative",
+            "stack": true,
+            "sort": "descending"
+          },
+          "text": {"field": "RegionAverage", "type": "quantitative","format":".2s"},
+          "fillOpacity": {"value": 1}
+        }
+      }
+    ],
+    "encoding": {
+      "theta": {"field": "RegionAverage", "type": "quantitative", "stack": true},
+      "radius": {
+        "field": "RegionAverage",
+        "scale": {"type": "sqrt", "zero": true, "rangeMin": 20}
+      },
+      "color": {"field": "Regionname", "type": "nominal",
+      "scale": {
+        "range": [
+          "#a14c28",
+          "#1b9e77",
+          "#7570b3",
+          "#fdc086",
+          "#fb8072",
+          "#66c2a5",
+          "#91962c",
+          "#3275a8"
+        ]
+      },
+      "legend":{ "title": "Region" ,
+    "labelFontSize":11}}
+      
+    }
+  }
