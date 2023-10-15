@@ -1,0 +1,326 @@
+@font-face {
+  font-family: calistoga;
+  src: url("fonts/calistoga/Calistoga-Regular.ttf");
+}
+
+@font-face {
+  font-family: playfair;
+  src: url("fonts/playfair/PlayfairDisplay-VariableFont_wght.ttf");
+}
+html{
+  scroll-behavior: smooth;
+}
+body * {
+  font-family: 'Quicksand', sans-serif;
+}
+
+  
+h1 {
+  font-family: calistoga;
+  text-align: center;
+  font-size: 50px;
+  font-weight: 1000;
+  color:#d16f36
+  
+}
+
+h2 {
+  font-family: playfair;
+  font-size: 30px;
+  color: #e08455;
+  
+}
+h3 {
+  font-family: Quicksand;
+  font-size: 20px;
+  color: #010101;
+  text-align: center;
+}
+  
+  body {
+	background-color: #f7ebdf;
+  }
+  
+  .page {
+	width: 850px;
+	background-color: rgb(255, 255, 255);
+	margin: auto;
+	padding: 50px;
+	padding-top: 35px;
+	height: auto;
+  }
+  
+  .vis-container {
+	width: 100%;
+  }
+  
+  .description h2,
+  h1 {
+	margin-top: 0px;
+  }
+  
+  .description-right {
+	padding-left: 20px;
+  }
+  
+  .description-left {
+	padding-right: 20px;
+  }
+  
+  .pure-g {
+	margin-bottom: 20px;
+  }
+  
+  .small-font {
+	font-size: 14px;
+  }
+
+  #dropdown-container{
+    padding-left: 10px;
+    padding-top: 4px;
+
+
+  }
+  #dropdown-container p{
+    padding: 5px;
+
+
+  }
+  #zone-select {
+    width: 200px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 2px rgb(204, 204, 204);
+    transition: all .5s ease;
+    position: relative;
+    font-size: 14px;
+    color: #020100;
+
+    text-align: left;
+}
+
+#zone-select .select {
+    cursor: pointer;
+    display: block;
+    padding: 10px
+}
+
+#zone-select .select > i {
+    font-size: 13px;
+    color: #7d7978;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    float: right;
+    line-height: 20px
+}
+
+#zone-select .dropdown-menu li {
+    padding: 10px;
+    transition: all .2s ease-in-out;
+    cursor: pointer
+} 
+
+hr {
+  height:2px;
+  background-color: #e06208;
+  border: none;
+}
+
+h3{
+  text-align: center;
+}
+#slider-container {
+  display: flex;
+  align-items: center; /* Vertically center the elements */
+}
+
+#dropdown-container {
+  display: flex;
+  align-items: center; /* Vertically center the elements */
+}
+
+#year-slider {
+  width: 100%; /* Make the slider span the entire width of its container */
+  height: 2px; /* Set the height of the slider bar */
+  background-color: #ddd; /* Set the background color of the slider bar */
+  outline: none; /* Remove the default focus outline */
+  -webkit-appearance: none; /* Remove the default styling on WebKit browsers */
+  appearance: none;
+
+}
+
+#slider-value1 {
+  margin-left: 8px; /* Add spacing between the slider and value */
+  margin-right: 30px;
+}
+
+#year-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+#year-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+#slider-container p {
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+#zoom-slider {
+  width: 100%; /* Make the slider span the entire width of its container */
+  height: 2px; /* Set the height of the slider bar */
+  background-color: #ddd; /* Set the background color of the slider bar */
+  outline: none; /* Remove the default focus outline */
+  -webkit-appearance: none; /* Remove the default styling on WebKit browsers */
+  appearance: none;
+}
+
+#slider-value2 {
+  margin-left: 10px; /* Add spacing between the slider and value */
+}
+
+#zoom-slider:hover {
+  opacity: 1;
+}
+
+#zoom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+#zoom-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+#percent {
+  margin-left: -1px; /* Adjust the margin as needed */
+}
+
+#landsize-slider {
+  width: 100%; /* Make the slider span the entire width of its container */
+  height: 2px; /* Set the height of the slider bar */
+  background-color: #ddd; /* Set the background color of the slider bar */
+  outline: none; /* Remove the default focus outline */
+  -webkit-appearance: none; /* Remove the default styling on WebKit browsers */
+  appearance: none;
+}
+
+#landsize-slider-value {
+  margin-left: 10px; /* Add spacing between the slider and value */
+}
+
+#landsize-slider:hover {
+  opacity: 1;
+}
+
+#landsize-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+#landsize-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+/* For Average Landsize Choropleth Zoom Slider */
+#zoom-slider2 {
+  width: 100%; /* Make the slider span the entire width of its container */
+  height: 2px; /* Set the height of the slider bar */
+  background-color: #ddd; /* Set the background color of the slider bar */
+  outline: none; /* Remove the default focus outline */
+  -webkit-appearance: none; /* Remove the default styling on WebKit browsers */
+  appearance: none;
+
+}
+
+#slider-value3 {
+  margin-left: 8px; /* Add spacing between the slider and value */
+  margin-right: 1px;
+}
+
+#zoom-slider2::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+#zoom-slider2::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+#percent2 {
+  margin-right: 16px; /* Adjust the margin as needed */
+}
+
+/* For Average Landsize Choropleth Price Slider */
+#slider-value4 {
+  margin-left: 8px; /* Add spacing between the slider and value */
+  margin-right: 30px;
+}
+
+#price-Slider {
+  width: 40%; /* Make the slider span the entire width of its container */
+  height: 2px; /* Set the height of the slider bar */
+  background-color: #ddd; /* Set the background color of the slider bar */
+  outline: none; /* Remove the default focus outline */
+  -webkit-appearance: none; /* Remove the default styling on WebKit browsers */
+  appearance: none;
+  padding-top: ;
+
+}
+
+#price-Slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+#price-Slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e38903;
+  cursor: pointer;
+}
+
+
